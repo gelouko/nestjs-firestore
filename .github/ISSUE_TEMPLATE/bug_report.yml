@@ -1,0 +1,65 @@
+name: "🐛 Bug Report"
+description: Create a new ticket for a bug.
+title: "🐛 - <title>"
+labels: [
+  "bug"
+]
+body:
+  - type: textarea
+    id: what-should-happen
+    attributes:
+      label: "Tell us what should happen"
+      description: Short and explicit description of the expected behavior.
+      placeholder: Something should do...
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: "Tell us what happens instead of the expected behavior"
+      description: Short and explicit description what actually happened.
+      placeholder: It did another thing.
+    validations:
+      required: true
+  - type: textarea
+    id: possible-solution
+    attributes:
+      label: "Not obligatory, but suggest a fix/reason for the bug"
+      description: How can we solve this problem?
+    validations:
+      required: false
+  - type: textarea
+    id: reprod
+    attributes:
+      label: "Provide a link to a live example, or an unambiguous set of steps to reproduce the bug"
+      description: Include logs and code to reproduce, if relevant
+      value: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: "How has this issue affected you? What are you trying to accomplish?"
+      description: Providing context helps us come up with a solution that is most useful in the real world
+      placeholder: I was trying to...
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: "Detailed Description"
+      description: Not obligatory, but provide a detailed description of the change or addition you are proposing
+    validations:
+      required: false
+  - type: textarea
+    id: possible-solution
+    attributes:
+      label: "Possible solution"
+      description: Not obligatory, but suggest an idea for implementing addition or change
+      render: markdown
+    validations:
+      required: false
