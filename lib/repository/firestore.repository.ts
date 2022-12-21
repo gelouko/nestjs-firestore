@@ -28,19 +28,18 @@ export class FirestoreRepository<T> {
       .withConverter(this.collectionOptions.converter ?? defaultConverter<T>());
   }
 
-  async create(document: T): Promise<FirestoreDocument<T>> {
-    const { ...object } = document; // TODO add to function to put subCollections later
-    const { id } = object as unknown as { id: string };
+  async create(document: FirestoreDocument<T>): Promise<FirestoreDocument<T>> {
+    const { id, ...object } = document; // TODO add to function to put subCollections later
 
     const docRef = id ? this.collectionRef.doc(id) : this.collectionRef.doc();
 
-    const result = await docRef.create(object);
+    const result = await docRef.create(object as T);
 
     return {
-      id: docRef.id,
+      ...document,
       createTime: result.writeTime.toDate(),
       updateTime: result.writeTime.toDate(),
-      ...document,
+      id: docRef.id,
     };
   }
 
