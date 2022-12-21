@@ -8,7 +8,6 @@ import { CollectionMetadata, FirestoreModuleCoreOptions } from '../interfaces';
 import { CollectionNotDefinedError } from '../errors/collection-not-defined.error';
 import { FirestoreDocument } from '../dto';
 
-// TODO implement
 export class FirestoreRepository<T> {
   private collectionRef: CollectionReference<T>;
   private collectionOptions: CollectionMetadata<T>;
@@ -66,6 +65,11 @@ export class FirestoreRepository<T> {
 
     let result: WriteResult;
     if (this.collectionOptions.softDelete) {
+      result = await docRef.update('deleteTime', new Date());
+    } else if (
+      this.firestoreModuleOptions.softDelete &&
+      this.collectionOptions.softDelete !== false
+    ) {
       result = await docRef.update('deleteTime', new Date());
     } else {
       result = await docRef.delete();

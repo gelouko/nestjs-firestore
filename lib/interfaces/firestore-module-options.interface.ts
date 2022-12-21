@@ -13,5 +13,5 @@ export type FirestoreModuleOptions = {
 
 // TODO implement interface
 export interface FirestoreModuleCoreOptions {
-  converters: Array<any>;
+  softDelete?: boolean;
 }

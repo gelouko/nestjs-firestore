@@ -25,7 +25,7 @@ export const Collection = <T>(
         options,
       ),
       converter: options.converter ?? defaultConverter<T>(),
-      softDelete: options.softDelete ?? false,
+      softDelete: options.softDelete,
     });
   };
 };

@@ -18,7 +18,7 @@ export class CatsController {
 
   @Post()
   async create(@Body() createCatDto: CreateCatDto) {
-    const cat = new Cat(); // TODO use constructor
+    const cat = new Cat();
     cat.name = createCatDto.name;
     cat.breed = createCatDto.breed;
     cat.age = createCatDto.age;
