@@ -47,8 +47,13 @@ export class FirestoreRepository<T> {
     const docRef: DocumentReference<T> = this.collectionRef.doc(id);
     const doc = await docRef.get();
 
+    const docData = doc.data() as FirestoreDocument;
+    if (docData.deleteTime) {
+      return null;
+    }
+
     return {
-      ...doc.data(),
+      ...docData,
       id: doc.id,
       createTime: doc.createTime?.toDate(),
       updateTime: doc.updateTime?.toDate(),
