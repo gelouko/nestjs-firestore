@@ -18,4 +18,8 @@ export class CatsService {
   async findById(id: string): Promise<FirestoreDocument<Cat> | null> {
     return this.catRepository.findById(id);
   }
+
+  async delete(id: string) {
+    return this.catRepository.delete(id);
+  }
 }

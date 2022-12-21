@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { Cat } from './collections/cat.collection';
@@ -23,5 +31,11 @@ export class CatsController {
     @Param('id') id: string,
   ): Promise<FirestoreDocument<Cat> | null> {
     return this.catsService.findById(id);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  async delete(@Param('id') id: string) {
+    await this.catsService.delete(id);
   }
 }

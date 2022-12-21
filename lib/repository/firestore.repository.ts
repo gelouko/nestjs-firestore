@@ -2,9 +2,9 @@ import {
   CollectionReference,
   DocumentReference,
   Firestore,
+  WriteResult,
 } from '@google-cloud/firestore';
 import { CollectionMetadata, FirestoreModuleCoreOptions } from '../interfaces';
-import { defaultConverter } from '@google-cloud/firestore/build/src/types';
 import { CollectionNotDefinedError } from '../errors/collection-not-defined.error';
 import { FirestoreDocument } from '../dto';
 
@@ -25,7 +25,7 @@ export class FirestoreRepository<T> {
 
     this.collectionRef = this.firestore
       .collection(this.collectionOptions.collectionPath)
-      .withConverter(this.collectionOptions.converter ?? defaultConverter<T>());
+      .withConverter(this.collectionOptions.converter);
   }
 
   async create(document: FirestoreDocument<T>): Promise<FirestoreDocument<T>> {
@@ -54,5 +54,18 @@ export class FirestoreRepository<T> {
       updateTime: doc.updateTime?.toDate(),
       readTime: doc.readTime?.toDate(),
     } as T;
+  }
+
+  async delete(id: string): Promise<Date> {
+    const docRef: DocumentReference<T> = this.collectionRef.doc(id);
+
+    let result: WriteResult;
+    if (this.collectionOptions.softDelete) {
+      result = await docRef.update('deleteTime', new Date());
+    } else {
+      result = await docRef.delete();
+    }
+
+    return result.writeTime.toDate();
   }
 }

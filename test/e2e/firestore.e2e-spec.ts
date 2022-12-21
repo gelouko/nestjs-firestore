@@ -44,7 +44,7 @@ describe('Firestore', () => {
       });
   });
 
-  it(`should return created document`, (done) => {
+  it(`should return an existing document`, (done) => {
     request(server)
       .get(`/cats/${catId}`)
       .expect(200)
@@ -58,6 +58,20 @@ describe('Firestore', () => {
         expect(body.readTime).toBeDefined();
 
         done();
+      });
+  });
+
+  it(`should delete an existing document`, (done) => {
+    request(server)
+      .delete(`/cats/${catId}`)
+      .expect(204)
+      .end(() => {
+        request(server)
+          .get(`/cats/${catId}`)
+          .expect(404)
+          .end(() => {
+            done();
+          });
       });
   });
 

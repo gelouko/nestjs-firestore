@@ -24,7 +24,7 @@ export class FirestoreProvider {
         new FirestoreRepository(
           firestore,
           options,
-          CollectionMetadataStorage.getCollection(collection.name),
+          CollectionMetadataStorage.getCollectionMetadata(collection.name),
         ),
     }));
 }

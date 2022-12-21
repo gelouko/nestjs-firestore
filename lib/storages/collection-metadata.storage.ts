@@ -10,8 +10,8 @@ class CollectionMetadataStorageHost {
    * @param key the class name
    * @param metadata all the collection information needed to perform correct operations in the library
    */
-  setCollection<T>(key: string, metadata: CollectionMetadata<T>) {
-    const existing = this.getCollection(key);
+  setCollectionMetadata<T>(key: string, metadata: CollectionMetadata<T>) {
+    const existing = this.getCollectionMetadata(key);
     if (existing) {
       throw new CollectionConflictError(key);
     }
@@ -25,7 +25,7 @@ class CollectionMetadataStorageHost {
    * @param key the class name
    * @returns the collection metadata
    */
-  getCollection<T>(key: string): CollectionMetadata<T> | null {
+  getCollectionMetadata<T>(key: string): CollectionMetadata<T> | null {
     return this.collections[key] ?? null;
   }
 }

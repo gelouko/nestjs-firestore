@@ -4,10 +4,12 @@
 import { CollectionMetadataStorage } from '../storages/collection-metadata.storage';
 import { CollectionUtils } from '../utils/collection.utils';
 import { FirestoreDataConverter } from '@google-cloud/firestore';
+import { defaultConverter } from '@google-cloud/firestore/build/src/types';
 
 export type CollectionOptions = {
   collectionPath?: string;
   converter?: FirestoreDataConverter<any>; // TODO strict type
+  softDelete?: boolean;
 };
 
 /**
@@ -17,12 +19,13 @@ export const Collection = <T>(
   options: CollectionOptions = {},
 ): ClassDecorator => {
   return (target: NewableFunction) => {
-    CollectionMetadataStorage.setCollection<T>(target.name, {
+    CollectionMetadataStorage.setCollectionMetadata<T>(target.name, {
       collectionPath: CollectionUtils.getCollectionPathFromAnnotatedClass(
         target,
         options,
       ),
-      converter: options.converter,
+      converter: options.converter ?? defaultConverter<T>(),
+      softDelete: options.softDelete ?? false,
     });
   };
 };
