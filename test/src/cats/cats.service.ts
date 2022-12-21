@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Cat } from './collections/cat.collection';
-import { FirestoreRepository } from '../../../lib';
-import { InjectRepository } from '../../../lib';
-import { FirestoreDocument } from '../../../lib';
+import { FirestoreRepository, InjectRepository } from '../../../lib';
 
 @Injectable()
 export class CatsService {
@@ -11,11 +9,11 @@ export class CatsService {
     private readonly catRepository: FirestoreRepository<Cat>,
   ) {}
 
-  async create(cat: Cat): Promise<FirestoreDocument<Cat>> {
+  async create(cat: Cat): Promise<Cat> {
     return this.catRepository.create(cat);
   }
 
-  async findById(id: string): Promise<FirestoreDocument<Cat> | null> {
+  async findById(id: string): Promise<Cat | null> {
     return this.catRepository.findById(id);
   }
 

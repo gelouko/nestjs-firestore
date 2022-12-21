@@ -8,7 +8,7 @@ import { CollectionMetadata, FirestoreModuleCoreOptions } from '../interfaces';
 import { CollectionNotDefinedError } from '../errors/collection-not-defined.error';
 import { FirestoreDocument } from '../dto';
 
-export class FirestoreRepository<T> {
+export class FirestoreRepository<T extends FirestoreDocument> {
   private collectionRef: CollectionReference<T>;
   private collectionOptions: CollectionMetadata<T>;
 
@@ -27,7 +27,7 @@ export class FirestoreRepository<T> {
       .withConverter(this.collectionOptions.converter);
   }
 
-  async create(document: FirestoreDocument<T>): Promise<FirestoreDocument<T>> {
+  async create(document: T): Promise<T> {
     const { id, ...object } = document; // TODO add to function to put subCollections later
 
     const docRef = id ? this.collectionRef.doc(id) : this.collectionRef.doc();

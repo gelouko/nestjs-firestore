@@ -10,6 +10,7 @@ import {
 } from './firestore.constants';
 import { FirestoreRepository } from './repository';
 import { CollectionMetadataStorage } from './storages/collection-metadata.storage';
+import { FirestoreDocument } from './dto';
 
 export class FirestoreProvider {
   static createFirestoreProvider = (
@@ -21,7 +22,7 @@ export class FirestoreProvider {
       provide: getRepositoryToken(collection),
       inject: [Firestore, NESTJS_FIRESTORE_CONFIG_OPTIONS],
       useFactory: (firestore: Firestore, options: FirestoreModuleCoreOptions) =>
-        new FirestoreRepository(
+        new FirestoreRepository<FirestoreDocument>(
           firestore,
           options,
           CollectionMetadataStorage.getCollectionMetadata(collection.name),
