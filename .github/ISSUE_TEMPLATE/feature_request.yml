@@ -1,0 +1,24 @@
+name: "⭐ Feature request"
+description: Create a new ticket for a new feature.
+title: "⭐ - <title>"
+labels: [
+  "feature"
+]
+body:
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: "What would you love to see in the library?"
+      description: Short and explicit description of the expected feature.
+      placeholder: I'd like to be able to... [Because I'd be able to...] [And so I wouldn't need to...]
+    validations:
+      required: true
+  - type: textarea
+    id: suggested-solution
+    attributes:
+      label: "Any solutions in mind?"
+      description: Optionally, share with us a solution that you think would fit your needs.
+      placeholder: Changing X to Y would already solve this problem for me...
+    validations:
+      required: false
+

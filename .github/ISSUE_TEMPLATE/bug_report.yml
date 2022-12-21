@@ -29,7 +29,7 @@ body:
     validations:
       required: false
   - type: textarea
-    id: reprod
+    id: reproduction
     attributes:
       label: "Provide a link to a live example, or an unambiguous set of steps to reproduce the bug"
       description: Include logs and code to reproduce, if relevant
