@@ -1,4 +1,8 @@
-## Description
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+## NestJS Firestoregit s
 
 [Firestore](https://cloud.google.com/firestore/docs/reference/libraries) module for [Nest](https://github.com/nestjs/nest).
 
@@ -77,7 +81,19 @@ export class CatsService {
 ## Contribute
 
 Check the `.github/contributing.md` file to learn how to contribute including 
-steps to build the project and the guidelines for contributing 
+steps to build the project and the guidelines for contributing
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 
 ## License
 
