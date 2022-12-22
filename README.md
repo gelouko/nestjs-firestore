@@ -2,7 +2,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-## NestJS Firestoregit s
+## NestJS Firestore
 
 [Firestore](https://cloud.google.com/firestore/docs/reference/libraries) module for [Nest](https://github.com/nestjs/nest).
 
