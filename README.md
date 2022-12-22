@@ -56,27 +56,26 @@ export class CatsService {
 }
 ```
 
-## Firestore's update method
-   To update some fields of a document without overwriting the entire document, use the following language-specific update() methods:
+## Using the firestore client
 
-   In nested Objects -
-   
-   const initialData = {
-   name: 'Frank',
-   age: 12,
-   favorites: {
-   food: 'Pizza',
-   color: 'Blue',
-   subject: 'recess'
-  }
-};
+We understand that sometimes there might be a feature in the cli that we haven't implemented yet
 
-// ...
-   const res = await db.collection('users').doc('Frank').update({
-   age: 13,
-  'favorites.color': 'Red'
-});
+In this case, you can directly inject the Firestore class and it will use the configured instance in forRoot
 
+```typescript
+@Injectable()
+export class CatsService {
+    constructor(
+        private readonly firestoreCli: Firestore,
+    ) {}
+    
+    async update(cat: Cat): Promise<Cat> {
+        // update some fields of a document without overwriting the entire document, use the following language-specific update() method:
+        await this.firestoreCli.collection(cats).doc(cat.id).update({ name: 'Frank' });
+    }
+}
+
+```
 
 ## Contribute
 
