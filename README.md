@@ -52,6 +52,28 @@ export class CatsService {
 }
 ```
 
+## Firestore's update method
+   To update some fields of a document without overwriting the entire document, use the following language-specific update() methods:
+
+   In nested Objects -
+   
+   const initialData = {
+   name: 'Frank',
+   age: 12,
+   favorites: {
+   food: 'Pizza',
+   color: 'Blue',
+   subject: 'recess'
+  }
+};
+
+// ...
+   const res = await db.collection('users').doc('Frank').update({
+   age: 13,
+  'favorites.color': 'Red'
+});
+
+
 ## Contribute
 
 Check the `.github/contributing.md` file to learn how to contribute including 
