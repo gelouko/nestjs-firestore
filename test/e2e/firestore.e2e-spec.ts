@@ -61,6 +61,25 @@ describe('Firestore', () => {
       });
   });
 
+  it(`should return a list of existing documents of a where query`, (done) => {
+    request(server)
+      .get(`/cats?name=${createDto.name}&breed=${createDto.breed}`)
+      .expect(200)
+      .end((err, { body }) => {
+        expect(body).toHaveLength(1);
+
+        const cat = body[0];
+        expect(cat.id).toEqual(catId);
+        expect(cat.name).toEqual(createDto.name);
+        expect(cat.age).toEqual(createDto.age);
+        expect(cat.breed).toEqual(createDto.breed);
+        expect(cat.createTime).toBeDefined();
+        expect(cat.readTime).toBeDefined();
+
+        done();
+      });
+  });
+
   it(`should delete an existing document`, (done) => {
     request(server)
       .delete(`/cats/${catId}`)

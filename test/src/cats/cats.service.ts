@@ -20,4 +20,13 @@ export class CatsService {
   async delete(id: string) {
     return this.catRepository.delete(id);
   }
+
+  async findByNameAndBreed(name: string, breed: string): Promise<Cat[]> {
+    return this.catRepository
+      .where('name')
+      .equals(name)
+      .and('breed')
+      .equals(breed)
+      .get();
+  }
 }

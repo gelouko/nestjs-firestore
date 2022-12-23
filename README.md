@@ -60,7 +60,7 @@ export class CatsService {
 
 We understand that sometimes there might be a feature in the cli that we haven't implemented yet
 
-In this case, you can directly inject the Firestore class and it will use the configured instance in forRoot
+In this case, you can directly inject the Firestore class, and it will use the configured instance in forRoot
 
 ```typescript
 @Injectable()
