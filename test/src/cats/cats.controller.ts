@@ -6,6 +6,7 @@ import {
   HttpCode,
   Param,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
@@ -31,6 +32,14 @@ export class CatsController {
     @Param('id') id: string,
   ): Promise<FirestoreDocument<Cat> | null> {
     return this.catsService.findById(id);
+  }
+
+  @Get()
+  async findByQuery(
+    @Query('name') name: string,
+    @Query('breed') breed: string,
+  ): Promise<FirestoreDocument<Cat>[]> {
+    return this.catsService.findByNameAndBreed(name, breed);
   }
 
   @Delete(':id')

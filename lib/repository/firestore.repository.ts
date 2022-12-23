@@ -7,9 +7,10 @@ import {
 import { CollectionMetadata, FirestoreModuleCoreOptions } from '../interfaces';
 import { CollectionNotDefinedError } from '../errors/collection-not-defined.error';
 import { FirestoreDocument } from '../dto';
+import { WhereQuery } from './where.query';
 
 export class FirestoreRepository<T extends FirestoreDocument> {
-  private collectionRef: CollectionReference<T>;
+  private readonly collectionRef: CollectionReference<T>;
   private collectionOptions: CollectionMetadata<T>;
 
   constructor(
@@ -76,5 +77,9 @@ export class FirestoreRepository<T extends FirestoreDocument> {
     }
 
     return result.writeTime.toDate();
+  }
+
+  where(property: string): WhereQuery<T> {
+    return new WhereQuery<T>(this.collectionRef, property);
   }
 }
