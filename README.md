@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## NestJS Firestore
@@ -91,6 +91,7 @@ steps to build the project and the guidelines for contributing
   <tbody>
     <tr>
       <td align="center"><a href="https://github.com/maddy020"><img src="https://avatars.githubusercontent.com/u/103564105?v=4?s=100" width="100px;" alt="maddy020"/><br /><sub><b>maddy020</b></sub></a><br /><a href="https://github.com/gelouko/nestjs-firestore/commits?author=maddy020" title="Documentation">📖</a></td>
+      <td align="center"><a href="https://github.com/gelouko"><img src="https://avatars.githubusercontent.com/u/12634218?v=4?s=100" width="100px;" alt="Giulio Denardi"/><br /><sub><b>Giulio Denardi</b></sub></a><br /><a href="https://github.com/gelouko/nestjs-firestore/commits?author=gelouko" title="Code">💻</a> <a href="https://github.com/gelouko/nestjs-firestore/commits?author=gelouko" title="Documentation">📖</a> <a href="#ideas-gelouko" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-gelouko" title="Maintenance">🚧</a> <a href="#projectManagement-gelouko" title="Project Management">📆</a> <a href="https://github.com/gelouko/nestjs-firestore/commits?author=gelouko" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
 </table>
