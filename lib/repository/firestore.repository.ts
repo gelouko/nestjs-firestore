@@ -10,7 +10,6 @@ import { FirestoreDocument } from '../dto';
 import { WhereQuery } from './where.query';
 
 export class FirestoreRepository<T extends FirestoreDocument> {
-  private readonly collectionRef: CollectionReference<T>;
   private collectionOptions: CollectionMetadata<T>;
 
   constructor(
@@ -22,8 +21,13 @@ export class FirestoreRepository<T extends FirestoreDocument> {
       throw new CollectionNotDefinedError();
     }
     this.collectionOptions = collectionOptions;
+  }
 
-    this.collectionRef = this.firestore
+  /**
+   * collectionRef is a getter to avoid race conditions when using operations with the collectionReference
+   */
+  get collectionRef(): CollectionReference<T> {
+    return this.firestore
       .collection(this.collectionOptions.collectionPath)
       .withConverter(this.collectionOptions.converter);
   }
