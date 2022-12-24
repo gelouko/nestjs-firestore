@@ -1,10 +1,6 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-) [![Known Vulnerabilities](https://snyk.io/test/github/gelouko/nestjs-firestore/badge.svg)](https://snyk.io/test/github/gelouko/nestjs-firestore)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-
-[![Known Vulnerabilities](https://snyk.io/test/github/gelouko/nestjs-firestore/badge.svg)]
-
-(https://snyk.io/test/github/{username}/{repo})
 
 ## NestJS Firestore
 
