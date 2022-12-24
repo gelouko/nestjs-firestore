@@ -2,6 +2,10 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+[![Known Vulnerabilities](https://snyk.io/test/github/gelouko/nestjs-firestore/badge.svg)]
+
+(https://snyk.io/test/github/{username}/{repo})
+
 ## NestJS Firestore
 
 [Firestore](https://cloud.google.com/firestore/docs/reference/libraries) module for [Nest](https://github.com/nestjs/nest).
