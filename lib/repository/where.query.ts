@@ -1,5 +1,6 @@
 import { Query, WhereFilterOp } from '@google-cloud/firestore';
 import { FirestoreDocument } from '../dto';
+import { PageQuery } from './page.query';
 
 /**
  * https://firebase.google.com/docs/firestore/query-data/queries
@@ -68,11 +69,19 @@ class ReadyWhereQuery<T extends FirestoreDocument> {
     return new WhereQuery(this.query, propertyName);
   }
 
+  paginate(): PageQuery<T> {
+    return new PageQuery<T>(this.query);
+  }
+
   async get(): Promise<Array<T>> {
     const result = await this.query.get();
 
     return result.docs
       .map((doc): T | null => {
+        if (!doc.exists) {
+          return null;
+        }
+
         const docData = doc.data();
 
         if (docData.deleteTime) {

@@ -80,6 +80,20 @@ describe('Firestore', () => {
       });
   });
 
+  it(`should return a list of existing documents paginated`, (done) => {
+    request(server)
+      .get(`/cats/list?limit=1&orderBy=name&startAt=Rest`)
+      .expect(200)
+      .end((err, { body }) => {
+        expect(body.items).toHaveLength(1);
+
+        const cat = body.items[0];
+        expect(cat.name).toEqual('Rest');
+
+        done();
+      });
+  });
+
   it(`should delete an existing document`, (done) => {
     request(server)
       .delete(`/cats/${catId}`)
