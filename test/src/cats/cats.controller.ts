@@ -47,9 +47,9 @@ export class CatsController {
     catDto.age = createCatDto.age;
     catDto.id = id;
 
-    const result = await this.catsService.set(catDto);
+    const { cat, isNew } = await this.catsService.set(catDto);
 
-    res.status(result.isNew ? 201 : 200).json(result.cat);
+    res.status(isNew ? 201 : 200).json(cat);
   }
 
   @Patch(':id')

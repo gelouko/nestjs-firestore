@@ -11,7 +11,6 @@ import { FirestoreDocument } from '../dto';
 import { WhereQuery } from './where.query';
 import { PageQuery } from './page.query';
 import { InvalidArgumentError } from '../errors/invalid-argument.error';
-import { RepositorySetDto } from '../dto/repository-set.dto';
 
 export class FirestoreRepository<T extends FirestoreDocument> {
   private collectionOptions: CollectionMetadata<T>;
@@ -51,7 +50,7 @@ export class FirestoreRepository<T extends FirestoreDocument> {
     };
   }
 
-  async set(document: T): Promise<RepositorySetDto<T>> {
+  async set(document: T): Promise<T> {
     const { id, ...object } = document;
 
     if (!id) {
@@ -59,22 +58,12 @@ export class FirestoreRepository<T extends FirestoreDocument> {
     }
 
     const docRef = this.collectionRef.doc(id);
-
-    const currentDocument = await docRef.get();
     const result = await docRef.set(object as T);
 
-    const isNew = !currentDocument.exists;
-
     return {
-      isNew,
-      data: {
-        ...document,
-        createTime: isNew
-          ? result.writeTime.toDate()
-          : currentDocument.createTime?.toDate(),
-        updateTime: result.writeTime.toDate(),
-        readTime: isNew ? undefined : currentDocument.readTime,
-      },
+      ...document,
+      createTime: result.writeTime.toDate(),
+      updateTime: result.writeTime.toDate(),
     };
   }
 

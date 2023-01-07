@@ -16,9 +16,11 @@ export class CatsService {
   }
 
   async set(cat: Cat): Promise<SetCatResponseDto> {
-    const { isNew, data } = await this.catRepository.set(cat);
+    const currentCat = await this.catRepository.findById(cat.id);
 
-    return new SetCatResponseDto(isNew, data);
+    const catSet = await this.catRepository.set(cat);
+
+    return new SetCatResponseDto(currentCat === null, catSet);
   }
 
   async update(cat: Partial<Cat>): Promise<Partial<Cat>> {
