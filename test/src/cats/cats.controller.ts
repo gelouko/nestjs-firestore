@@ -6,6 +6,7 @@ import {
   HttpCode,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Put,
   Query,
@@ -17,6 +18,7 @@ import { Cat } from './collections/cat.collection';
 import { FirestoreDocument } from '../../../lib';
 import { Page } from '../../../lib/dto/page.dto';
 import { Response } from 'express';
+import { UpdateCatDto } from './dto/update-cat.dto';
 
 @Controller('cats')
 export class CatsController {
@@ -48,6 +50,18 @@ export class CatsController {
     const result = await this.catsService.set(catDto);
 
     res.status(result.isNew ? 201 : 200).json(result.cat);
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
+    const cat: Partial<Cat> = new Cat();
+
+    cat.name = updateCatDto.name;
+    cat.breed = updateCatDto.breed;
+    cat.age = updateCatDto.age;
+    cat.id = id;
+
+    return await this.catsService.update(cat);
   }
 
   @Get('list')
