@@ -9,6 +9,8 @@ import { CollectionNotDefinedError } from '../errors/collection-not-defined.erro
 import { FirestoreDocument } from '../dto';
 import { WhereQuery } from './where.query';
 import { PageQuery } from './page.query';
+import { InvalidArgumentError } from '../errors/invalid-argument.error';
+import { RepositorySetDto } from '../dto/repository-set.dto';
 
 export class FirestoreRepository<T extends FirestoreDocument> {
   private collectionOptions: CollectionMetadata<T>;
@@ -48,6 +50,33 @@ export class FirestoreRepository<T extends FirestoreDocument> {
     };
   }
 
+  async set(document: T): Promise<RepositorySetDto<T>> {
+    const { id, ...object } = document;
+
+    if (!id) {
+      throw new InvalidArgumentError('id is required when setting an entity');
+    }
+
+    const docRef = this.collectionRef.doc(id);
+
+    const currentDocument = await docRef.get();
+    const result = await docRef.set(object as T);
+
+    const isNew = !currentDocument.exists;
+
+    return {
+      isNew,
+      data: {
+        ...document,
+        createTime: isNew
+          ? result.writeTime.toDate()
+          : currentDocument.createTime?.toDate(),
+        updateTime: result.writeTime.toDate(),
+        readTime: isNew ? undefined : currentDocument.readTime,
+      },
+    };
+  }
+
   async findById(id: string): Promise<T | null> {
     const docRef: DocumentReference<T> = this.collectionRef.doc(id);
     const doc = await docRef.get();
@@ -77,8 +106,8 @@ export class FirestoreRepository<T extends FirestoreDocument> {
     if (this.collectionOptions.softDelete) {
       result = await docRef.update('deleteTime', new Date());
     } else if (
-      this.firestoreModuleOptions.softDelete &&
-      this.collectionOptions.softDelete !== false
+      !this.firestoreModuleOptions.softDelete &&
+      this.collectionOptions.softDelete
     ) {
       result = await docRef.update('deleteTime', new Date());
     } else {

@@ -7,13 +7,16 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
   Query,
+  Res,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { Cat } from './collections/cat.collection';
 import { FirestoreDocument } from '../../../lib';
 import { Page } from '../../../lib/dto/page.dto';
+import { Response } from 'express';
 
 @Controller('cats')
 export class CatsController {
@@ -27,6 +30,24 @@ export class CatsController {
     cat.age = createCatDto.age;
 
     return this.catsService.create(cat);
+  }
+
+  @Put(':id')
+  async set(
+    @Param('id') id: string,
+    @Body() createCatDto: CreateCatDto,
+    @Res() res: Response,
+  ) {
+    const catDto = new Cat();
+
+    catDto.name = createCatDto.name;
+    catDto.breed = createCatDto.breed;
+    catDto.age = createCatDto.age;
+    catDto.id = id;
+
+    const result = await this.catsService.set(catDto);
+
+    res.status(result.isNew ? 201 : 200).json(result.cat);
   }
 
   @Get('list')

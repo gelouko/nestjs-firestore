@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Cat } from './collections/cat.collection';
 import { FirestoreRepository, InjectRepository } from '../../../lib';
 import { Page } from '../../../lib/dto/page.dto';
+import { SetCatResponseDto } from './dto/set-cat-response.dto';
 
 @Injectable()
 export class CatsService {
@@ -14,8 +15,20 @@ export class CatsService {
     return this.catRepository.create(cat);
   }
 
+  async set(cat: Cat): Promise<SetCatResponseDto> {
+    const { isNew, data } = await this.catRepository.set(cat);
+
+    return new SetCatResponseDto(isNew, data);
+  }
+
   async findById(id: string): Promise<Cat | null> {
-    return this.catRepository.findById(id);
+    const cat = await this.catRepository.findById(id);
+
+    if (!cat) {
+      throw new NotFoundException();
+    }
+
+    return cat;
   }
 
   async delete(id: string) {
