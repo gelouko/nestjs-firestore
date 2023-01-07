@@ -156,13 +156,17 @@ describe('Firestore', () => {
     expect(updateResult.status).toBe(200);
 
     const updateBody = updateResult.body;
-    expect(updateBody.name).toEqual(newCatName);
-    expect(updateBody.age).toEqual(createDto.age);
-    expect(updateBody.breed).toEqual(createDto.breed);
-    expect(updateBody.createTime).toEqual(createBody.createTime);
-    expect(updateBody.updateTime).toBeDefined();
+    expect(updateBody).toStrictEqual({
+      id: catId,
+      name: newCatName,
+      age: createDto.age,
+      breed: createDto.breed,
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
+    });
+
+    expect(updateBody.createTime).not.toEqual(createBody.createTime);
     expect(updateBody.updateTime).not.toEqual(createBody.createTime);
-    expect(updateBody.readTime).toBeDefined();
   });
 
   afterEach(async () => {
