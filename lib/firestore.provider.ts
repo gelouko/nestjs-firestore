@@ -5,6 +5,7 @@ import {
   FirestoreModuleCoreOptions,
 } from './interfaces';
 import {
+  DEFAULT_FIRESTORE_SETTINGS,
   getRepositoryToken,
   NESTJS_FIRESTORE_CONFIG_OPTIONS,
 } from './firestore.constants';
@@ -15,7 +16,9 @@ import { FirestoreDocument } from './dto';
 export class FirestoreProvider {
   static createFirestoreProvider = (
     options: FirestoreModuleAsyncOptions,
-  ): Firestore => options.firestore ?? new Firestore(options.firestoreSettings);
+  ): Firestore =>
+    options.firestore ??
+    new Firestore(options.firestoreSettings ?? DEFAULT_FIRESTORE_SETTINGS);
 
   static createFirestoreRepositoryProviders = (collections: Array<Type>) =>
     collections.map((collection) => ({

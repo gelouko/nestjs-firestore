@@ -2,6 +2,7 @@ import {
   CollectionReference,
   DocumentReference,
   Firestore,
+  UpdateData,
   WriteResult,
 } from '@google-cloud/firestore';
 import { CollectionMetadata, FirestoreModuleCoreOptions } from '../interfaces';
@@ -74,6 +75,22 @@ export class FirestoreRepository<T extends FirestoreDocument> {
         updateTime: result.writeTime.toDate(),
         readTime: isNew ? undefined : currentDocument.readTime,
       },
+    };
+  }
+
+  async update(document: Partial<T>): Promise<Partial<T>> {
+    const { id, ...object } = document;
+
+    if (!id) {
+      throw new InvalidArgumentError('id is required when updating an entity');
+    }
+
+    const docRef = this.collectionRef.doc(id);
+    const result = await docRef.update(object as UpdateData<T>);
+
+    return {
+      ...document,
+      updateTime: result.writeTime.toDate(),
     };
   }
 

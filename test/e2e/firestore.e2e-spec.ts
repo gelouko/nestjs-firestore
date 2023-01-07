@@ -92,6 +92,37 @@ describe('Firestore', () => {
     expect(cat.name).toEqual('Nest');
   });
 
+  it(`should update an existing document`, async () => {
+    const newCatName = 'Rest';
+
+    const updateResult = await request(server)
+      .patch(`/cats/${catId}`)
+      .send({ name: newCatName });
+
+    expect(updateResult.status).toEqual(200);
+
+    const updateBody = updateResult.body;
+    expect(updateBody).toStrictEqual({
+      id: catId,
+      name: newCatName,
+      updateTime: expect.any(String),
+    });
+
+    const getResult = await request(server).get(`/cats/${catId}`);
+
+    expect(getResult.status).toEqual(200);
+    const getBody = getResult.body;
+    expect(getBody).toStrictEqual({
+      id: catId,
+      name: newCatName,
+      age: createDto.age,
+      breed: createDto.breed,
+      readTime: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: updateBody.updateTime,
+    });
+  });
+
   it(`should delete an existing document`, async () => {
     const deleteResult = await request(server).delete(`/cats/${catId}`);
     expect(deleteResult.status).toEqual(204);

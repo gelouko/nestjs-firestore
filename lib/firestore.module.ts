@@ -5,7 +5,7 @@ import {
 } from './interfaces';
 import { Firestore } from '@google-cloud/firestore';
 import {
-  defaultFirestoreModuleOptions,
+  DEFAULT_FIRESTORE_MODULE_CORE_OPTIONS,
   NESTJS_FIRESTORE_CONFIG_OPTIONS,
 } from './firestore.constants';
 import { FirestoreProvider } from './firestore.provider';
@@ -13,13 +13,13 @@ import { FirestoreProvider } from './firestore.provider';
 @Module({})
 export class FirestoreModule {
   static forRoot(
-    options: FirestoreModuleOptions = defaultFirestoreModuleOptions,
+    options: FirestoreModuleOptions = DEFAULT_FIRESTORE_MODULE_CORE_OPTIONS,
   ): DynamicModule {
     return FirestoreModule.forRootAsync(options);
   }
 
   static forRootAsync(
-    options: FirestoreModuleAsyncOptions = defaultFirestoreModuleOptions,
+    options: FirestoreModuleAsyncOptions = DEFAULT_FIRESTORE_MODULE_CORE_OPTIONS,
   ): DynamicModule {
     return {
       module: FirestoreModule,
