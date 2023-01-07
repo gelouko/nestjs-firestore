@@ -27,35 +27,37 @@ describe('Firestore', () => {
 
   it(`should return created document`, async () => {
     const result = await request(server).post('/cats').send(createDto);
-
     expect(result.status).toBe(201);
 
     const { body } = result;
 
-    expect(body.name).toEqual(createDto.name);
-    expect(body.age).toEqual(createDto.age);
-    expect(body.breed).toEqual(createDto.breed);
-    expect(body.createTime).toBeDefined();
-    expect(body.updateTime).toBeDefined();
-    expect(body.readTime).not.toBeDefined();
+    expect(body).toStrictEqual({
+      id: expect.any(String),
+      name: createDto.name,
+      age: createDto.age,
+      breed: createDto.breed,
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
+    });
 
     catId = body.id;
   });
 
   it(`should return an existing document`, async () => {
     const result = await request(server).get(`/cats/${catId}`);
-
     expect(result.status).toBe(200);
 
     const { body } = result;
 
-    expect(body.id).toEqual(body.id);
-    expect(body.name).toEqual(createDto.name);
-    expect(body.age).toEqual(createDto.age);
-    expect(body.breed).toEqual(createDto.breed);
-    expect(body.createTime).toEqual(body.createTime);
-    expect(body.updateTime).toEqual(body.updateTime);
-    expect(body.readTime).toBeDefined();
+    expect(body).toStrictEqual({
+      id: catId,
+      name: createDto.name,
+      age: createDto.age,
+      breed: createDto.breed,
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
+      readTime: expect.any(String),
+    });
   });
 
   it(`should return a list of existing documents of a where query`, async () => {
@@ -67,29 +69,49 @@ describe('Firestore', () => {
 
     const { body } = result;
 
-    expect(body).toHaveLength(1);
-
-    const cat = body[0];
-    expect(cat.id).toEqual(catId);
-    expect(cat.name).toEqual(createDto.name);
-    expect(cat.age).toEqual(createDto.age);
-    expect(cat.breed).toEqual(createDto.breed);
-    expect(cat.createTime).toBeDefined();
-    expect(cat.readTime).toBeDefined();
+    expect(body).toStrictEqual([
+      {
+        id: catId,
+        name: createDto.name,
+        age: createDto.age,
+        breed: createDto.breed,
+        createTime: expect.any(String),
+        updateTime: expect.any(String),
+        readTime: expect.any(String),
+      },
+    ]);
   });
 
   it(`should return a list of existing documents paginated`, async () => {
-    const result = await request(server).get(
-      `/cats/list?limit=1&orderBy=name&startAt=Rest`,
+    const startName = 'Rest';
+
+    const createResult = await request(server)
+      .post('/cats')
+      .send({ ...createDto, name: 'Rest' });
+    expect(createResult.status).toBe(201);
+
+    const catId = createResult.body.id;
+
+    const listResult = await request(server).get(
+      `/cats/list?limit=1&orderBy=name&startAt=${startName}`,
     );
 
-    expect(result.status).toBe(200);
+    expect(listResult.status).toBe(200);
 
-    const { body } = result;
-    expect(body.items).toHaveLength(1);
-
-    const cat = body.items[0];
-    expect(cat.name).toEqual('Nest');
+    const { body } = listResult;
+    expect(body).toStrictEqual({
+      items: [
+        {
+          id: catId,
+          name: startName,
+          age: createDto.age,
+          breed: createDto.breed,
+          createTime: expect.any(String),
+          updateTime: expect.any(String),
+          readTime: expect.any(String),
+        },
+      ],
+    });
   });
 
   it(`should update an existing document`, async () => {
@@ -109,8 +131,8 @@ describe('Firestore', () => {
     });
 
     const getResult = await request(server).get(`/cats/${catId}`);
-
     expect(getResult.status).toEqual(200);
+
     const getBody = getResult.body;
     expect(getBody).toStrictEqual({
       id: catId,
@@ -142,12 +164,15 @@ describe('Firestore', () => {
     expect(createResult.status).toBe(201);
 
     const createBody = createResult.body;
-    expect(createBody.name).toEqual(createDto.name);
-    expect(createBody.age).toEqual(createDto.age);
-    expect(createBody.breed).toEqual(createDto.breed);
-    expect(createBody.createTime).toBeDefined();
-    expect(createBody.updateTime).toBeDefined();
-    expect(createBody.readTime).not.toBeDefined();
+
+    expect(createBody).toStrictEqual({
+      id: catId,
+      name: createDto.name,
+      age: createDto.age,
+      breed: createDto.breed,
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
+    });
 
     const updateResult = await request(server)
       .put(`/cats/${catId}`)
