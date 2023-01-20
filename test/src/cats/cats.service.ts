@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Cat } from './collections/cat.collection';
 import { FirestoreRepository, InjectRepository } from '../../../lib';
 import { Page } from '../../../lib/dto/page.dto';
@@ -68,14 +72,19 @@ export class CatsService {
     surname: string,
     @Tx tx?: Transaction,
   ): Promise<Cat> {
-    const cat = await this.catRepository.findById(catId, { tx });
+    if (!tx) {
+      throw new InternalServerErrorException();
+    }
 
+    const catTransactionalRepository = this.catRepository.withTransaction(tx);
+
+    const cat = await catTransactionalRepository.findById(catId);
     if (!cat) {
       throw new NotFoundException();
     }
 
     cat.name = `${cat.name} ${surname}`;
-    await this.catRepository.update(cat, { tx });
+    await catTransactionalRepository.update(cat);
 
     return cat;
   }
