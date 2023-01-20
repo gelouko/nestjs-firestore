@@ -194,6 +194,26 @@ describe('Firestore', () => {
     expect(updateBody.updateTime).not.toEqual(createBody.createTime);
   });
 
+  it('should inject a transaction to run in a transactional context', async () => {
+    const catId = 'meowd';
+    const catSurname = 'Art';
+
+    const result = await request(server)
+      .patch(`/cats/${catId}/surname`)
+      .send({ surname: catSurname });
+
+    expect(result.status).toBe(200);
+
+    expect(result.body).toStrictEqual({
+      ...createDto,
+      name: 'Rest ' + catSurname,
+      id: catId,
+      readTime: expect.any(String),
+      createTime: expect.any(String),
+      updateTime: expect.any(String),
+    });
+  });
+
   afterEach(async () => {
     await app.close();
     await server.close();

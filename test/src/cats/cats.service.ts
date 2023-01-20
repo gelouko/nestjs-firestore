@@ -3,6 +3,9 @@ import { Cat } from './collections/cat.collection';
 import { FirestoreRepository, InjectRepository } from '../../../lib';
 import { Page } from '../../../lib/dto/page.dto';
 import { SetCatResponseDto } from './dto/set-cat-response.dto';
+import { Transactional } from '../../../lib/decorators/transactional.decorator';
+import { Transaction } from '../../../lib/transactions/transaction.provider';
+import { Tx } from '../../../lib/decorators/tx.decorators';
 
 @Injectable()
 export class CatsService {
@@ -57,5 +60,23 @@ export class CatsService {
       .and('breed')
       .equals(breed)
       .get();
+  }
+
+  @Transactional
+  async setSurname(
+    catId: string,
+    surname: string,
+    @Tx tx?: Transaction,
+  ): Promise<Cat> {
+    const cat = await this.catRepository.findById(catId, { tx });
+
+    if (!cat) {
+      throw new NotFoundException();
+    }
+
+    cat.name = `${cat.name} ${surname}`;
+    await this.catRepository.update(cat, { tx });
+
+    return cat;
   }
 }

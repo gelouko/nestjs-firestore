@@ -1,8 +1,10 @@
 import { CollectionMetadata } from '../interfaces';
 import { CollectionConflictError } from '../errors';
+import { Firestore } from '@google-cloud/firestore';
 
-class CollectionMetadataStorageHost {
+export class NestJsFirestoreMetadataStorageHost {
   private collections: Record<string, CollectionMetadata<any>> = {}; // TODO strict type
+  private firestore: Firestore;
 
   /**
    * Sets the collection metadata using a string key.
@@ -28,12 +30,33 @@ class CollectionMetadataStorageHost {
   getCollectionMetadata<T>(key: string): CollectionMetadata<T> | null {
     return this.collections[key] ?? null;
   }
+
+  /**
+   * Sets the current firestore object in the metadata
+   * @param instance the current firestore instance
+   */
+  setFirestore(instance: Firestore) {
+    // if (this.firestore) {
+    //   throw new CollectionConflictError('nestjs-firestore-instance');
+    // }
+
+    this.firestore = instance;
+  }
+
+  /**
+   * Gets the current firestore instance, mainly for decorator purposes
+   *
+   * @returns the current firestore instance
+   */
+  getFirestore(): Firestore {
+    return this.firestore ?? null;
+  }
 }
 
 const globalRef = global as unknown as {
-  NestjsFirestoreTypeMetadataStorage: CollectionMetadataStorageHost;
+  NestJsFirestoreMetadataStorage: NestJsFirestoreMetadataStorageHost;
 };
-export const CollectionMetadataStorage: CollectionMetadataStorageHost =
-  globalRef.NestjsFirestoreTypeMetadataStorage ||
-  (globalRef.NestjsFirestoreTypeMetadataStorage =
-    new CollectionMetadataStorageHost());
+export const MetadataStorage: NestJsFirestoreMetadataStorageHost =
+  globalRef.NestJsFirestoreMetadataStorage ||
+  (globalRef.NestJsFirestoreMetadataStorage =
+    new NestJsFirestoreMetadataStorageHost());

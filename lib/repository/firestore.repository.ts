@@ -11,6 +11,7 @@ import { FirestoreDocument } from '../dto';
 import { WhereQuery } from './where.query';
 import { PageQuery } from './page.query';
 import { InvalidArgumentError } from '../errors/invalid-argument.error';
+import { Transaction } from '../transactions/transaction.provider';
 
 export class FirestoreRepository<T extends FirestoreDocument> {
   private collectionOptions: CollectionMetadata<T>;
@@ -67,7 +68,10 @@ export class FirestoreRepository<T extends FirestoreDocument> {
     };
   }
 
-  async update(document: Partial<T>): Promise<Partial<T>> {
+  async update(
+    document: Partial<T>,
+    options?: { tx?: Transaction },
+  ): Promise<Partial<T>> {
     const { id, ...object } = document;
 
     if (!id) {
@@ -75,6 +79,15 @@ export class FirestoreRepository<T extends FirestoreDocument> {
     }
 
     const docRef = this.collectionRef.doc(id);
+
+    if (options?.tx) {
+      options.tx._update(docRef, object as UpdateData<T>);
+
+      return {
+        ...document,
+      };
+    }
+
     const result = await docRef.update(object as UpdateData<T>);
 
     return {
@@ -83,9 +96,15 @@ export class FirestoreRepository<T extends FirestoreDocument> {
     };
   }
 
-  async findById(id: string): Promise<T | null> {
+  async findById(
+    id: string,
+    options?: { tx?: Transaction },
+  ): Promise<T | null> {
     const docRef: DocumentReference<T> = this.collectionRef.doc(id);
-    const doc = await docRef.get();
+
+    const doc = options?.tx
+      ? await options.tx._get(docRef)
+      : await docRef.get();
 
     if (!doc.exists) {
       return null;
