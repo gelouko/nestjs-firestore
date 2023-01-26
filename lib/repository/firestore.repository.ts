@@ -13,6 +13,8 @@ import { InvalidArgumentError } from '../errors/invalid-argument.error';
 import { Transaction } from '../transactions/transaction.provider';
 import { TransactionalRepository } from './transactional-repository';
 import { BaseRepository } from './base-repository.provider';
+import { WriteBatch } from '../batches/batch.provider';
+import { WriteBatchRepository } from './batch-repository.provider';
 
 export class FirestoreRepository<
   T extends FirestoreDocument,
@@ -117,11 +119,20 @@ export class FirestoreRepository<
   }
 
   withTransaction(tx: Transaction): TransactionalRepository<T> {
-    return new TransactionalRepository(
+    return new TransactionalRepository<T>(
       this.firestore,
       this.firestoreModuleOptions,
       this.collectionOptions,
       tx,
+    );
+  }
+
+  withBatch(batch: WriteBatch): WriteBatchRepository<T> {
+    return new WriteBatchRepository<T>(
+      this.firestore,
+      this.firestoreModuleOptions,
+      this.collectionOptions,
+      batch,
     );
   }
 

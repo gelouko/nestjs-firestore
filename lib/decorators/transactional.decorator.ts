@@ -22,7 +22,7 @@ export const Transactional = (
     target,
     functionName,
   );
-  if (!transactionIndex) {
+  if (transactionIndex === undefined) {
     throw new TransactionNotDeclaredError(className, functionName);
   }
 
