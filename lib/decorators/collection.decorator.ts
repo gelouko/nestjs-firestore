@@ -1,7 +1,7 @@
 /**
  * Interface defining schema options that can be passed to `@Collection()` decorator.
  */
-import { CollectionMetadataStorage } from '../storages/collection-metadata.storage';
+import { MetadataStorage } from '../storages/metadata.storage';
 import { CollectionUtils } from '../utils/collection.utils';
 import { FirestoreDataConverter } from '@google-cloud/firestore';
 import { defaultConverter } from '@google-cloud/firestore/build/src/types';
@@ -19,7 +19,7 @@ export const Collection = <T>(
   options: CollectionOptions = {},
 ): ClassDecorator => {
   return (target: NewableFunction) => {
-    CollectionMetadataStorage.setCollectionMetadata<T>(target.name, {
+    MetadataStorage.setCollectionMetadata<T>(target.name, {
       collectionPath: CollectionUtils.getCollectionPathFromAnnotatedClass(
         target,
         options,

@@ -10,15 +10,21 @@ import {
   NESTJS_FIRESTORE_CONFIG_OPTIONS,
 } from './firestore.constants';
 import { FirestoreRepository } from './repository';
-import { CollectionMetadataStorage } from './storages/collection-metadata.storage';
+import { MetadataStorage } from './storages/metadata.storage';
 import { FirestoreDocument } from './dto';
 
 export class FirestoreProvider {
   static createFirestoreProvider = (
     options: FirestoreModuleAsyncOptions,
-  ): Firestore =>
-    options.firestore ??
-    new Firestore(options.firestoreSettings ?? DEFAULT_FIRESTORE_SETTINGS);
+  ): Firestore => {
+    const firestore = options.firestore
+      ? options.firestore
+      : new Firestore(options.firestoreSettings ?? DEFAULT_FIRESTORE_SETTINGS);
+
+    MetadataStorage.setFirestore(firestore);
+
+    return firestore;
+  };
 
   static createFirestoreRepositoryProviders = (collections: Array<Type>) =>
     collections.map((collection) => ({
@@ -28,7 +34,7 @@ export class FirestoreProvider {
         new FirestoreRepository<FirestoreDocument>(
           firestore,
           options,
-          CollectionMetadataStorage.getCollectionMetadata(collection.name),
+          MetadataStorage.getCollectionMetadata(collection.name),
         ),
     }));
 }

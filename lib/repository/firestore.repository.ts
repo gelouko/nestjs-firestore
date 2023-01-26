@@ -1,5 +1,4 @@
 import {
-  CollectionReference,
   DocumentReference,
   Firestore,
   UpdateData,
@@ -11,35 +10,29 @@ import { FirestoreDocument } from '../dto';
 import { WhereQuery } from './where.query';
 import { PageQuery } from './page.query';
 import { InvalidArgumentError } from '../errors/invalid-argument.error';
+import { Transaction } from '../transactions/transaction.provider';
+import { TransactionalRepository } from './transactional-repository';
+import { BaseRepository } from './base-repository.provider';
 
-export class FirestoreRepository<T extends FirestoreDocument> {
-  private collectionOptions: CollectionMetadata<T>;
-
+export class FirestoreRepository<
+  T extends FirestoreDocument,
+> extends BaseRepository<T> {
   constructor(
-    private readonly firestore: Firestore,
-    private readonly firestoreModuleOptions: FirestoreModuleCoreOptions,
+    firestore: Firestore,
+    firestoreModuleOptions: FirestoreModuleCoreOptions,
     collectionOptions: CollectionMetadata<T> | null,
   ) {
     if (!collectionOptions) {
       throw new CollectionNotDefinedError();
     }
-    this.collectionOptions = collectionOptions;
-  }
 
-  /**
-   * collectionRef is a getter to avoid race conditions when using operations with the collectionReference
-   */
-  get collectionRef(): CollectionReference<T> {
-    return this.firestore
-      .collection(this.collectionOptions.collectionPath)
-      .withConverter(this.collectionOptions.converter);
+    super(firestore, firestoreModuleOptions, collectionOptions);
   }
 
   async create(document: T): Promise<T> {
     const { id, ...object } = document; // TODO add to function to put subCollections later
 
     const docRef = id ? this.collectionRef.doc(id) : this.collectionRef.doc();
-
     const result = await docRef.create(object as T);
 
     return {
@@ -85,8 +78,8 @@ export class FirestoreRepository<T extends FirestoreDocument> {
 
   async findById(id: string): Promise<T | null> {
     const docRef: DocumentReference<T> = this.collectionRef.doc(id);
-    const doc = await docRef.get();
 
+    const doc = await docRef.get();
     if (!doc.exists) {
       return null;
     }
@@ -121,6 +114,15 @@ export class FirestoreRepository<T extends FirestoreDocument> {
     }
 
     return result.writeTime.toDate();
+  }
+
+  withTransaction(tx: Transaction): TransactionalRepository<T> {
+    return new TransactionalRepository(
+      this.firestore,
+      this.firestoreModuleOptions,
+      this.collectionOptions,
+      tx,
+    );
   }
 
   where(property: string): WhereQuery<T> {

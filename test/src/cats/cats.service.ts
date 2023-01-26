@@ -1,8 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Cat } from './collections/cat.collection';
 import { FirestoreRepository, InjectRepository } from '../../../lib';
 import { Page } from '../../../lib/dto/page.dto';
 import { SetCatResponseDto } from './dto/set-cat-response.dto';
+import { Transactional } from '../../../lib/decorators/transactional.decorator';
+import { Transaction } from '../../../lib/transactions/transaction.provider';
+import { Tx } from '../../../lib/decorators/tx.decorators';
 
 @Injectable()
 export class CatsService {
@@ -57,5 +64,28 @@ export class CatsService {
       .and('breed')
       .equals(breed)
       .get();
+  }
+
+  @Transactional
+  async setSurname(
+    catId: string,
+    surname: string,
+    @Tx tx?: Transaction,
+  ): Promise<Cat> {
+    if (!tx) {
+      throw new InternalServerErrorException();
+    }
+
+    const catTransactionalRepository = this.catRepository.withTransaction(tx);
+
+    const cat = await catTransactionalRepository.findById(catId);
+    if (!cat) {
+      throw new NotFoundException();
+    }
+
+    cat.name = `${cat.name} ${surname}`;
+    await catTransactionalRepository.update(cat);
+
+    return cat;
   }
 }

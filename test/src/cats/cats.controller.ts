@@ -19,6 +19,7 @@ import { FirestoreDocument } from '../../../lib';
 import { Page } from '../../../lib/dto/page.dto';
 import { Response } from 'express';
 import { UpdateCatDto } from './dto/update-cat.dto';
+import { SetSurnameDto } from './dto/set-surname.dto';
 
 @Controller('cats')
 export class CatsController {
@@ -92,5 +93,13 @@ export class CatsController {
   @HttpCode(204)
   async delete(@Param('id') id: string) {
     await this.catsService.delete(id);
+  }
+
+  @Patch(':id/surname')
+  async setSurname(
+    @Param('id') id: string,
+    @Body() surnameDto: SetSurnameDto,
+  ): Promise<Cat> {
+    return this.catsService.setSurname(id, surnameDto.surname);
   }
 }
