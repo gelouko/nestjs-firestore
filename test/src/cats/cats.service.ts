@@ -10,6 +10,9 @@ import { SetCatResponseDto } from './dto/set-cat-response.dto';
 import { Transactional } from '../../../lib/decorators/transactional.decorator';
 import { Transaction } from '../../../lib/transactions/transaction.provider';
 import { Tx } from '../../../lib/decorators/tx.decorators';
+import { Batched } from '../../../lib/decorators/batched.decorator';
+import { WriteBatch } from '../../../lib/batches/batch.provider';
+import { Batch } from '../../../lib/decorators/batch.decorators';
 
 @Injectable()
 export class CatsService {
@@ -87,5 +90,30 @@ export class CatsService {
     await catTransactionalRepository.update(cat);
 
     return cat;
+  }
+
+  @Batched
+  async procreate(@Batch batch?: WriteBatch): Promise<Cat[]> {
+    const maxCatKittenQuantity = 19;
+
+    if (!batch) {
+      throw new InternalServerErrorException();
+    }
+    const catWriteBatchRepository = this.catRepository.withBatch(batch);
+
+    const numberOfKittens = Math.ceil(maxCatKittenQuantity * Math.random());
+    const kittens = new Array(numberOfKittens);
+
+    for (let i = 0; i <= numberOfKittens; i++) {
+      const kitten = new Cat();
+      kitten.name = `Kitten ${i + 1}`;
+      kitten.age = 0;
+      kitten.breed = 'unknown';
+
+      kittens[i] = kitten;
+      catWriteBatchRepository.create(kitten);
+    }
+
+    return kittens;
   }
 }

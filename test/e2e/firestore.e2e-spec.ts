@@ -214,6 +214,23 @@ describe('Firestore', () => {
     });
   });
 
+  it('should inject a batch to run in the method in a write batch', async () => {
+    const result = await request(server).post(`/cats/procreate`).send();
+
+    expect(result.status).toBe(201);
+
+    expect(result.body.length).toBeGreaterThanOrEqual(1);
+    expect(result.body.length).toBeLessThanOrEqual(19);
+
+    for (const kitten of result.body) {
+      expect(kitten).toStrictEqual({
+        name: expect.stringMatching(/Kitten \d/),
+        breed: 'unknown',
+        age: 0,
+      });
+    }
+  });
+
   afterEach(async () => {
     await app.close();
     await server.close();

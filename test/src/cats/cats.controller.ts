@@ -102,4 +102,9 @@ export class CatsController {
   ): Promise<Cat> {
     return this.catsService.setSurname(id, surnameDto.surname);
   }
+
+  @Post('procreate')
+  async procreate(): Promise<Cat[]> {
+    return this.catsService.procreate();
+  }
 }
