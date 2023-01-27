@@ -1,14 +1,14 @@
 import { DynamicModule, Module, Type } from '@nestjs/common';
-import {
-  FirestoreModuleAsyncOptions,
-  FirestoreModuleOptions,
-} from './interfaces';
 import { Firestore } from '@google-cloud/firestore';
 import {
   DEFAULT_FIRESTORE_MODULE_CORE_OPTIONS,
   NESTJS_FIRESTORE_CONFIG_OPTIONS,
 } from './firestore.constants';
 import { FirestoreProvider } from './firestore.provider';
+import {
+  FirestoreModuleAsyncOptions,
+  FirestoreModuleOptions,
+} from './options/firestore-module-options.interface';
 
 @Module({})
 export class FirestoreModule {

@@ -1,6 +1,6 @@
-import { FirestoreDocument } from '../dto';
 import { Query } from '@google-cloud/firestore';
-import { Page } from '../dto/page.dto';
+import { Page } from './page.dto';
+import { FirestoreDocument } from './firestore-document.dto';
 
 export class PageQuery<T extends FirestoreDocument> {
   constructor(protected query: Query<T>) {}

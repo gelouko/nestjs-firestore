@@ -4,15 +4,16 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Cat } from './collections/cat.collection';
-import { FirestoreRepository, InjectRepository } from '../../../lib';
-import { Page } from '../../../lib/dto/page.dto';
+import { Page } from '../../../lib/queries/page.dto';
 import { SetCatResponseDto } from './dto/set-cat-response.dto';
-import { Transactional } from '../../../lib/decorators/transactional.decorator';
+import { Transactional } from '../../../lib/transactions/transactional.decorator';
 import { Transaction } from '../../../lib/transactions/transaction.provider';
-import { Tx } from '../../../lib/decorators/tx.decorators';
-import { Batched } from '../../../lib/decorators/batched.decorator';
+import { Tx } from '../../../lib/transactions/tx.decorators';
+import { Batched } from '../../../lib/batches/batched.decorator';
 import { WriteBatch } from '../../../lib/batches/batch.provider';
-import { Batch } from '../../../lib/decorators/batch.decorators';
+import { Batch } from '../../../lib/batches/batch.decorators';
+import { InjectRepository } from '../../../lib/repositories/inject-repository.decorator';
+import { FirestoreRepository } from '../../../lib';
 
 @Injectable()
 export class CatsService {

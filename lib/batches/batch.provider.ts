@@ -4,7 +4,7 @@ import {
   WithFieldValue,
   WriteBatch as FirestoreWriteBatch,
 } from '@google-cloud/firestore';
-import { FirestoreDocument } from '../dto';
+import { FirestoreDocument } from '../queries/firestore-document.dto';
 
 export class WriteBatch {
   private firestoreBatch: FirestoreWriteBatch;

@@ -5,7 +5,7 @@ import {
   UpdateData,
   WithFieldValue,
 } from '@google-cloud/firestore';
-import { FirestoreDocument } from '../dto';
+import { FirestoreDocument } from '../queries/firestore-document.dto';
 
 export class Transaction {
   private firestoreTransaction: FirestoreTransaction;

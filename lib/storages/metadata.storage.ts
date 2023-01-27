@@ -1,6 +1,6 @@
-import { CollectionMetadata } from '../interfaces';
 import { CollectionConflictError } from '../errors';
 import { Firestore } from '@google-cloud/firestore';
+import { CollectionMetadata } from '../collections/firestore-collection.interface';
 
 export class NestJsFirestoreMetadataStorageHost {
   private collections: Record<string, CollectionMetadata<any>> = {}; // TODO strict type

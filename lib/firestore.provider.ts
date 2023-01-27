@@ -1,17 +1,17 @@
 import { Type } from '@nestjs/common';
 import { Firestore } from '@google-cloud/firestore';
 import {
-  FirestoreModuleAsyncOptions,
-  FirestoreModuleCoreOptions,
-} from './interfaces';
-import {
   DEFAULT_FIRESTORE_SETTINGS,
   getRepositoryToken,
   NESTJS_FIRESTORE_CONFIG_OPTIONS,
 } from './firestore.constants';
-import { FirestoreRepository } from './repository';
+import { FirestoreRepository } from './repositories';
 import { MetadataStorage } from './storages/metadata.storage';
-import { FirestoreDocument } from './dto';
+import {
+  FirestoreModuleAsyncOptions,
+  FirestoreModuleCoreOptions,
+} from './options/firestore-module-options.interface';
+import { FirestoreDocument } from './queries/firestore-document.dto';
 
 export class FirestoreProvider {
   static createFirestoreProvider = (

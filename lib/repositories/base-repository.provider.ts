@@ -1,6 +1,7 @@
 import { CollectionReference, Firestore } from '@google-cloud/firestore';
-import { FirestoreDocument } from '../dto';
-import { CollectionMetadata, FirestoreModuleCoreOptions } from '../interfaces';
+import { FirestoreDocument } from '../queries/firestore-document.dto';
+import { FirestoreModuleCoreOptions } from '../options/firestore-module-options.interface';
+import { CollectionMetadata } from '../collections/firestore-collection.interface';
 
 export abstract class BaseRepository<T extends FirestoreDocument> {
   protected constructor(
