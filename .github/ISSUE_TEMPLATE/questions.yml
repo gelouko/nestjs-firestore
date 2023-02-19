@@ -1,6 +1,6 @@
 ---
 name: "❓ Questions"
-description: Search on stackoverflow using the "nestjs-firestore" tag.
+description: Search on stackoverflow using the 'nestjs-firestore' tag.
 title: "Please, do not create this issue. Use stackoverflow instead"
 labels: [
   "bug"
@@ -8,7 +8,7 @@ labels: [
 body:
   - type: markdown
     attributes:
-      value: |
+      value: |-
         ## Thank you for your interest in nestjs-firestore
         
         Please, use [stackoverflow](https://stackoverflow.com/) with the `nestjs-firestore` tag to submit questions.
