@@ -1,5 +1,5 @@
 import { CollectionReference, Firestore } from '@google-cloud/firestore';
-import { FirestoreDocument } from '../queries/firestore-document.dto';
+import { FirestoreDocument } from './queries/dto/firestore-document.dto';
 import { FirestoreModuleCoreOptions } from '../options/firestore-module-options.interface';
 import { CollectionMetadata } from '../collections/firestore-collection.interface';
 

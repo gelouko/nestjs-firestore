@@ -1,6 +1,6 @@
 import { Query, WhereFilterOp } from '@google-cloud/firestore';
 import { PageQuery } from './page.query';
-import { FirestoreDocument } from './firestore-document.dto';
+import { FirestoreDocument } from './dto/firestore-document.dto';
 
 /**
  * https://firebase.google.com/docs/firestore/query-data/queries

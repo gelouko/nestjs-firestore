@@ -1,5 +1,5 @@
-import { Transaction } from './transaction.provider';
-import { getTransactionMetadataKey } from './transaction.utils';
+import { Transaction } from '../transaction.provider';
+import { getTransactionMetadataKey } from '../utils/transaction.utils';
 
 export const Tx = (
   target: Transaction,

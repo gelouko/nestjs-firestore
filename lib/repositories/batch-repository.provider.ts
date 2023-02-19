@@ -5,10 +5,10 @@ import {
   UpdateData,
 } from '@google-cloud/firestore';
 import { BaseRepository } from './base-repository.provider';
-import { WriteBatch } from '../batches/batch.provider';
+import { WriteBatch } from './batches/batch.provider';
 import { FirestoreModuleCoreOptions } from '../options/firestore-module-options.interface';
 import { CollectionMetadata } from '../collections/firestore-collection.interface';
-import { FirestoreDocument } from '../queries/firestore-document.dto';
+import { FirestoreDocument } from './queries/dto/firestore-document.dto';
 
 export class WriteBatchRepository<
   T extends FirestoreDocument,

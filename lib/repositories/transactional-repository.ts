@@ -1,4 +1,4 @@
-import { Transaction } from '../transactions/transaction.provider';
+import { Transaction } from './transactions/transaction.provider';
 import { InvalidArgumentError } from '../errors/invalid-argument.error';
 import {
   DocumentReference,
@@ -6,7 +6,7 @@ import {
   UpdateData,
 } from '@google-cloud/firestore';
 import { BaseRepository } from './base-repository.provider';
-import { FirestoreDocument } from '../queries/firestore-document.dto';
+import { FirestoreDocument } from './queries/dto/firestore-document.dto';
 import { FirestoreModuleCoreOptions } from '../options/firestore-module-options.interface';
 import { CollectionMetadata } from '../collections/firestore-collection.interface';
 
