@@ -27,6 +27,7 @@ body:
     attributes:
       label: "Not obligatory, but suggest a fix/reason for the bug"
       description: How can we solve this problem?
+      placeholder: This bug can be solved by changing...
     validations:
       required: false
   - type: textarea
@@ -54,13 +55,5 @@ body:
     attributes:
       label: "Detailed Description"
       description: Not obligatory, but provide a detailed description of the change or addition you are proposing
-    validations:
-      required: false
-  - type: textarea
-    id: possible-solution
-    attributes:
-      label: "Possible solution"
-      description: Not obligatory, but suggest an idea for implementing addition or change
-      render: markdown
     validations:
       required: false
