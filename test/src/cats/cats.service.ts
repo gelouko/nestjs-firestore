@@ -4,15 +4,15 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Cat } from './collections/cat.collection';
-import { Page } from '../../../lib/queries/page.dto';
+import { Page } from '../../../lib/repositories/queries/dto/page.dto';
 import { SetCatResponseDto } from './dto/set-cat-response.dto';
-import { Transactional } from '../../../lib/transactions/transactional.decorator';
-import { Transaction } from '../../../lib/transactions/transaction.provider';
-import { Tx } from '../../../lib/transactions/tx.decorators';
-import { Batched } from '../../../lib/batches/batched.decorator';
-import { WriteBatch } from '../../../lib/batches/batch.provider';
-import { Batch } from '../../../lib/batches/batch.decorators';
-import { InjectRepository } from '../../../lib/repositories/inject-repository.decorator';
+import { Transactional } from '../../../lib/repositories/transactions/decorators/transactional.decorator';
+import { Transaction } from '../../../lib/repositories/transactions/transaction.provider';
+import { Tx } from '../../../lib/repositories/transactions/decorators/tx.decorators';
+import { Batched } from '../../../lib/repositories/batches/decorators/batched.decorator';
+import { WriteBatch } from '../../../lib/repositories/batches/batch.provider';
+import { Batch } from '../../../lib/repositories/batches/decorators/batch.decorators';
+import { InjectRepository } from '../../../lib/repositories/decorators/inject-repository.decorator';
 import { FirestoreRepository } from '../../../lib';
 
 @Injectable()

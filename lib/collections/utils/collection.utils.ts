@@ -1,5 +1,5 @@
 import { plural } from 'pluralize';
-import { CollectionOptions } from './collection.decorator';
+import { CollectionOptions } from '../decorators/collection.decorator';
 
 export class CollectionUtils {
   /**

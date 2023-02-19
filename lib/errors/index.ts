@@ -1,1 +1,1 @@
-export * from './collection-conflict.error';
+export * from '../collections/errors/collection-conflict.error';

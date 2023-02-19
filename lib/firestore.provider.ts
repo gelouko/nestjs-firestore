@@ -11,7 +11,7 @@ import {
   FirestoreModuleAsyncOptions,
   FirestoreModuleCoreOptions,
 } from './options/firestore-module-options.interface';
-import { FirestoreDocument } from './queries/firestore-document.dto';
+import { FirestoreDocument } from './repositories/queries/dto/firestore-document.dto';
 
 export class FirestoreProvider {
   static createFirestoreProvider = (

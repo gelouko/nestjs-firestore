@@ -4,16 +4,16 @@ import {
   UpdateData,
   WriteResult,
 } from '@google-cloud/firestore';
-import { CollectionNotDefinedError } from '../errors/collection-not-defined.error';
-import { WhereQuery } from '../queries/where.query';
-import { PageQuery } from '../queries/page.query';
+import { CollectionNotDefinedError } from '../collections/errors/collection-not-defined.error';
+import { WhereQuery } from './queries/where.query';
+import { PageQuery } from './queries/page.query';
 import { InvalidArgumentError } from '../errors/invalid-argument.error';
-import { Transaction } from '../transactions/transaction.provider';
+import { Transaction } from './transactions/transaction.provider';
 import { TransactionalRepository } from './transactional-repository';
 import { BaseRepository } from './base-repository.provider';
-import { WriteBatch } from '../batches/batch.provider';
+import { WriteBatch } from './batches/batch.provider';
 import { WriteBatchRepository } from './batch-repository.provider';
-import { FirestoreDocument } from '../queries/firestore-document.dto';
+import { FirestoreDocument } from './queries/dto/firestore-document.dto';
 import { FirestoreModuleCoreOptions } from '../options/firestore-module-options.interface';
 import { CollectionMetadata } from '../collections/firestore-collection.interface';
 
