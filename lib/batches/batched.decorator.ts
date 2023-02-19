@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import { MetadataStorage } from '../storages/metadata.storage';
-import { getWriteBatchMetadataKey } from '../utils/write-batch.utils';
+import { getWriteBatchMetadataKey } from './write-batch.utils';
 import { WriteBatchNotDeclaredError } from '../errors/write-batch-not-declared.error';
-import { WriteBatch } from '../batches/batch.provider';
+import { WriteBatch } from './batch.provider';
 
 export const Batched = (
   target: any,

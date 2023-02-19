@@ -1,5 +1,5 @@
-import { getWriteBatchMetadataKey } from '../utils/write-batch.utils';
-import { WriteBatch } from '../batches/batch.provider';
+import { getWriteBatchMetadataKey } from './write-batch.utils';
+import { WriteBatch } from './batch.provider';
 
 export const Batch = (
   target: WriteBatch,

@@ -1,5 +1,5 @@
-import { Collection } from '../../../../lib';
-import { FirestoreDocument } from '../../../../lib';
+import { Collection } from '../../../../lib/collections/collection.decorator';
+import { FirestoreDocument } from '../../../../lib/queries/firestore-document.dto';
 
 @Collection()
 export class Cat extends FirestoreDocument<Cat> {

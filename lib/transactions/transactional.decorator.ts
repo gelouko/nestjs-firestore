@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { MetadataStorage } from '../storages/metadata.storage';
-import { getTransactionMetadataKey } from '../utils/transaction.utils';
+import { getTransactionMetadataKey } from './transaction.utils';
 import { TransactionNotDeclaredError } from '../errors/transaction-not-declared.error';
 import { Transaction as FirestoreTransaction } from '@google-cloud/firestore';
-import { Transaction } from '../transactions/transaction.provider';
+import { Transaction } from './transaction.provider';
 
 export const Transactional = (
   target: any,

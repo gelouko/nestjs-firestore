@@ -2,7 +2,7 @@
  * Interface defining schema options that can be passed to `@Collection()` decorator.
  */
 import { MetadataStorage } from '../storages/metadata.storage';
-import { CollectionUtils } from '../utils/collection.utils';
+import { CollectionUtils } from './collection.utils';
 import { FirestoreDataConverter } from '@google-cloud/firestore';
 import { defaultConverter } from '@google-cloud/firestore/build/src/types';
 

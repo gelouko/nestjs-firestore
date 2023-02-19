@@ -1,5 +1,5 @@
-import { FirestoreModuleOptions } from './interfaces';
 import { Type } from '@nestjs/common';
+import { FirestoreModuleOptions } from './options/firestore-module-options.interface';
 
 export const NESTJS_FIRESTORE_CONFIG_OPTIONS =
   'NESTJS_FIRESTORE_CONFIG_OPTIONS';

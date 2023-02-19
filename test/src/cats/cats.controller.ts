@@ -15,11 +15,11 @@ import {
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { Cat } from './collections/cat.collection';
-import { FirestoreDocument } from '../../../lib';
-import { Page } from '../../../lib/dto/page.dto';
+import { Page } from '../../../lib/queries/page.dto';
 import { Response } from 'express';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { SetSurnameDto } from './dto/set-surname.dto';
+import { FirestoreDocument } from '../../../lib/queries/firestore-document.dto';
 
 @Controller('cats')
 export class CatsController {

@@ -4,17 +4,18 @@ import {
   UpdateData,
   WriteResult,
 } from '@google-cloud/firestore';
-import { CollectionMetadata, FirestoreModuleCoreOptions } from '../interfaces';
 import { CollectionNotDefinedError } from '../errors/collection-not-defined.error';
-import { FirestoreDocument } from '../dto';
-import { WhereQuery } from './where.query';
-import { PageQuery } from './page.query';
+import { WhereQuery } from '../queries/where.query';
+import { PageQuery } from '../queries/page.query';
 import { InvalidArgumentError } from '../errors/invalid-argument.error';
 import { Transaction } from '../transactions/transaction.provider';
 import { TransactionalRepository } from './transactional-repository';
 import { BaseRepository } from './base-repository.provider';
 import { WriteBatch } from '../batches/batch.provider';
 import { WriteBatchRepository } from './batch-repository.provider';
+import { FirestoreDocument } from '../queries/firestore-document.dto';
+import { FirestoreModuleCoreOptions } from '../options/firestore-module-options.interface';
+import { CollectionMetadata } from '../collections/firestore-collection.interface';
 
 export class FirestoreRepository<
   T extends FirestoreDocument,
