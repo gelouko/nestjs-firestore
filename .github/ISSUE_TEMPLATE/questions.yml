@@ -7,8 +7,9 @@ labels: [
 ]
 body:
   - type: markdown
+    id: disclaimer
     attributes:
-      value: |-
+      value: |
         ## Thank you for your interest in nestjs-firestore
         
         Please, use [stackoverflow](https://stackoverflow.com/) with the `nestjs-firestore` tag to submit questions.
