@@ -15,3 +15,5 @@ body:
         Please, use [stackoverflow](https://stackoverflow.com/) with the `nestjs-firestore` tag to submit questions.
         
         Do not create a question issue.
+    validations:
+      required: true
