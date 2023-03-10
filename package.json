@@ -22,7 +22,7 @@
     "format": "prettier --write \"lib/**/*.ts\" \"test/**/*.ts\""
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.4.2",
+    "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.2",
     "@nestjs/cli": "^9.2.0",
     "@nestjs/common": "^9.3.1",
