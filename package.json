@@ -25,7 +25,7 @@
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.2",
     "@nestjs/cli": "^9.2.0",
-    "@nestjs/common": "^9.3.1",
+    "@nestjs/common": "^9.3.9",
     "@nestjs/core": "^9.3.9",
     "@nestjs/schematics": "^9.0.4",
     "@nestjs/testing": "^9.0.0",
